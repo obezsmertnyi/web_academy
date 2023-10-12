@@ -1,0 +1,37 @@
+version: '3.7'
+
+services:
+ minio:
+   container_name: minio
+   image: minio/minio:latest
+   command: server --console-address ":9001" /data/
+   ports:
+     - "9000:9000"
+     - "9001:9001"
+   environment:
+     MINIO_ROOT_USER: user
+     MINIO_ROOT_PASSWORD: minio123
+   volumes:
+     - minio-storage:/data
+   healthcheck:
+     test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+     interval: 30s
+     timeout: 20s
+     retries: 3
+volumes:
+ minio-storage:
+
+#    command: server --address ":9099" --console-address ":9000" /data
+#    restart: always # necessary since it's failing to start sometimes
+#    networks:
+#      - app-tier
+#  myapp:
+#    image: 'YOUR_APPLICATION_IMAGE'
+#    networks:
+#      - app-tier
+#    environment:
+#      - MINIO_SERVER_ACCESS_KEY=minio-access-key
+#      - MINIO_SERVER_SECRET_KEY=minio-secret-key
+#      - MINIO_DEFAULT_BUCKETS=my-first-bucket:policy,my-second-bucket
+#      - MINIO_HTTP_TRACE=/opt/bitnami/minio/log/minio.log
+#      - MINIO_FORCE_NEW_KEYS="yes"
