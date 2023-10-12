@@ -122,7 +122,6 @@ Uploading LFS objects: 100% (1/1), 12 KB | 0 B/s, done.
 root@gitlab:/# gitlab-rake gitlab:lfs:migrate
 I, [2023-10-12T18:45:56.502605 #5955]  INFO -- : Starting transfer of LFS files to object storage
 I, [2023-10-12T18:45:57.177368 #5955]  INFO -- : Transferred LFS object 2e4a7664603336067f14f78964c6f3cf11c8f59b7072ad2797a05c558ee1e372 of size 11692 to object storage
-root@gitlab:/# gitlab-rake gitlab:lfs:migrate
 ```
 ```console
 gitlabhq_production=# SELECT count(*) AS total, sum(case when file_store = '1' then 1 else 0 end) AS filesystem, sum(case when file_store = '2' then 1 else 0 end) AS objectstg FROM lfs_objects;
